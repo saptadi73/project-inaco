@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model purchase{
+  id Int @id @default(autoincrement())
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+  nomor Int 
+  description String?
+  material material @relation(fields: [id_material], references: [id])
+  id_material Int
+  delivery_date DateTime
+  currency currency @relation(fields: [id_currency], references: [id])
+  id_currency Int
+  price Int
+  quantity Int
+  amount Int
+  id_top Int
+  top top @relation(fields: [id_top], references: [id])
+}
+
+model material {
+  id Int @id @default(autoincrement())
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+  name  String
+  description String?
+  material_group material_group @relation(fields: [id_material_group], references: [id])
+  id_material_group Int
+  purchase purchase[]
+
+}
+
+model material_group {
+  id Int @id @default(autoincrement())
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+  name String
+  description String?
+  material material[]
+}
+
+model currency {
+  id Int @id @default(autoincrement())
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+  name String
+  description String?
+  purchase purchase[]
+}
+
+model top {
+  id Int @id @default(autoincrement())
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+  name String
+  description String?
+  purchase purchase[]
+}
