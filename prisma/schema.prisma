@@ -17,7 +17,7 @@ model purchase{
   id Int @id @default(autoincrement())
   createdAt          DateTime        @default(now())
   updatedAt          DateTime        @updatedAt
-  nomor Int 
+  nomor String
   description String?
   material material @relation(fields: [id_material], references: [id])
   id_material Int
