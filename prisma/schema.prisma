@@ -31,6 +31,21 @@ model purchase{
   top top @relation(fields: [id_top], references: [id])
 }
 
+model purchase_transisi {
+  id Int @id @default(autoincrement())
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+  nomor String
+  description String?
+  id_material Int
+  delivery_date DateTime
+  id_currency Int
+  price Int
+  quantity Int
+  amount Int
+  id_top Int
+}
+
 model material {
   id Int @id @default(autoincrement())
   createdAt          DateTime        @default(now())

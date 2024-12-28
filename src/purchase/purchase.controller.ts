@@ -29,6 +29,29 @@ export class PurchaseController {
             return 'Error Bos' + error;
         }
     }
+
+    @Post('upload/sementara')
+    @UseInterceptors(
+        FileInterceptor('file', {
+            storage: diskStorage({
+                filename: FileNameEditor,
+                destination: './upload',
+            }),
+            limits: {
+                fileSize: 1000 * 1000 * 10,
+            },
+        })
+    )
+    async uploadExcelSementara(@UploadedFile() file: Express.Multer.File) {
+        try {
+            const filePath = file.path; // Asumsikan file disimpan sementara
+            await this.purchaseService.importExcelTransisi(filePath);
+            return { message: 'Data imported successfully!' };
+        } catch (error) {
+            return 'Error Bos' + error;
+        }
+    }
+
     @Get('pertama')
     async pertama() {
         return 'hello pasti dong';
